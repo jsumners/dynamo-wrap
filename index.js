@@ -12,7 +12,7 @@ const clientProto = {
         Key: key,
         TableName: table
       })
-      this[dbKey].getItem(query, (err, data) => {
+      this[dbKey].get(query, (err, data) => {
         if (err) return reject(err)
         return resolve(data)
       })
@@ -29,7 +29,7 @@ const clientProto = {
         Item: item,
         TableName: table
       })
-      this[dbKey].putItem(payload, (err, data) => {
+      this[dbKey].put(payload, (err, data) => {
         if (err) return reject(err)
         return resolve(data)
       })
@@ -48,7 +48,7 @@ module.exports = function ({apiVersion = '2012-08-10', region, credentials, othe
     region,
     credentials
   })
-  const db = new AWS.DynamoDB(options)
+  const db = new AWS.DynamoDB.DocumentClient(options)
   client[dbKey] = db
   return client
 }

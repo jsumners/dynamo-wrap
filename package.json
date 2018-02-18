@@ -7,7 +7,9 @@
     "lint": "standard | snazzy",
     "lint-ci": "standard",
     "test": "tap --no-cov 'test/**/*.test.js'",
-    "test-ci": "tap --cov --coverage-report=text 'test/**/*.test.js'"
+    "test-ci": "tap --cov --coverage-report=text 'test/**/*.test.js'",
+    "pretest": "docker-compose up -d dynamodb",
+    "posttest": "docker-compose down"
   },
   "repository": {
     "type": "git",
