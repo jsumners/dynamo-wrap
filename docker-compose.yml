@@ -5,3 +5,4 @@ services:
     image: jsumners/dynamodb-local-sample
     ports:
       - 8000:8000
+    container_name: dynamodb1

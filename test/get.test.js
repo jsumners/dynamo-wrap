@@ -3,7 +3,7 @@
 const test = require('tap').test
 const AWS = require('aws-sdk')
 const clientFactory = require('../')
-const endpoint = new AWS.Endpoint('http://localhost:8000')
+const endpoint = new AWS.Endpoint('http://127.0.0.1:8000')
 
 test('can retrieve items', (t) => {
   t.plan(1)
