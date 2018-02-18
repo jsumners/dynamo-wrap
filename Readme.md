@@ -1,6 +1,6 @@
 # dynamo-wrap
 
-This is a simple wrapper around the [`aws-sdk`][awsdk] to facilitate
+This is a simple wrapper around the [`aws-sdk`][awssdk] to facilitate
 working with DynamoDB instances.
 
 [awssdk]: https://npm.im/aws-sdk
