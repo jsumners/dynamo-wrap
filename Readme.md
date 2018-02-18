@@ -1,4 +1,5 @@
 # dynamo-wrap
+[![Build Status](https://travis-ci.org/jsumners/dynamo-wrap.svg?branch=master)](https://travis-ci.org/jsumners/dynamo-wrap)
 
 This is a simple wrapper around the [`aws-sdk`][awssdk] to facilitate
 working with DynamoDB instances.
