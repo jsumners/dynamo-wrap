@@ -16,7 +16,8 @@ services:
 
 script:
   - npm run lint-ci
-  - npm run test-ci
+  - docker-compose up -d dynamodb && npm run test-ci
+  - docker-compose down
 
 notifications:
   email:
