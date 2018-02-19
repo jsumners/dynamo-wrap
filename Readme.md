@@ -57,7 +57,7 @@ function accepts an options object with the following properties:
 `'2012-08-10'`.
 + `region` (required): The target AWS region for the database.
 + `credentials` (required): An AWS credentials object.
-+ `optionOptions`: An object specifying additional options to be supplied to
++ `otherOptions`: An object specifying additional options to be supplied to
 the `AWS.DynamodDB` constructor. Default: `{}`.
 
 <a id="get"></a>
