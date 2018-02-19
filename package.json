@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "standard | snazzy",
     "lint-ci": "standard",
-    "test": "tap --no-cov 'test/**/*.test.js'",
-    "test-ci": "tap --cov --coverage-report=text 'test/**/*.test.js'",
+    "test": "ava 'test/**/*.test.js'",
+    "test-ci": "nyc --coverage-report=text ava --tap 'test/**/*.test.js'",
     "pretest": "docker-compose up -d dynamodb",
     "posttest": "docker-compose down"
   },
@@ -32,9 +32,10 @@
     "aws-sdk": "^2.197.0"
   },
   "devDependencies": {
+    "ava": "^0.25.0",
+    "nyc": "^11.4.1",
     "pre-commit": "^1.2.2",
     "snazzy": "^7.0.0",
-    "standard": "^10.0.3",
-    "tap": "^11.1.0"
+    "standard": "^10.0.3"
   }
 }

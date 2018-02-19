@@ -1,11 +1,11 @@
 'use strict'
 
-const test = require('tap').test
+const test = require('ava').test
 const AWS = require('aws-sdk')
 const clientFactory = require('../')
 const endpoint = new AWS.Endpoint('http://127.0.0.1:8000')
 
-test('can retrieve items', (t) => {
+test.cb('can retrieve items', (t) => {
   t.plan(1)
   const client = clientFactory({
     region: 'none',
@@ -17,12 +17,13 @@ test('can retrieve items', (t) => {
   })
   client.get('Movies', {year: 2013, title: 'Rush'})
     .then((result) => {
-      t.strictDeepEqual(result, {
+      t.deepEqual(result, {
         Item: {
           year: 2013,
           title: 'Rush'
         }
       })
+      t.end()
     })
-    .catch(t.threw)
+    .catch(t.fail)
 })

@@ -1,11 +1,11 @@
 'use strict'
 
-const test = require('tap').test
+const test = require('ava').test
 const AWS = require('aws-sdk')
 const clientFactory = require('../')
 const endpoint = new AWS.Endpoint('http://127.0.0.1:8000')
 
-test('can put items', (t) => {
+test.cb('can put items', (t) => {
   t.plan(1)
 
   const client = clientFactory({
@@ -25,12 +25,13 @@ test('can put items', (t) => {
   client.put('Movies', item)
     .then(() => client.get('Movies', {title: 'foo', year}))
     .then((_item) => {
-      t.strictDeepEqual(item, _item.Item)
+      t.deepEqual(item, _item.Item)
+      t.end()
     })
-    .catch(t.threw)
+    .catch(t.fail)
 })
 
-test('fails for bad payload', (t) => {
+test.cb('fails for bad payload', (t) => {
   t.plan(2)
 
   const client = clientFactory({
@@ -44,7 +45,8 @@ test('fails for bad payload', (t) => {
   client.put('Movies', {title: 'foo'})
     .then(() => t.fail('should not happen'))
     .catch((err) => {
-      t.type(err, Error)
-      t.match(err, /required keys/)
+      t.true(Error.prototype.isPrototypeOf(err))
+      t.true(/required keys/.test(err.message))
+      t.end()
     })
 })
