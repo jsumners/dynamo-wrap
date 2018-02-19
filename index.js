@@ -4,39 +4,51 @@ const AWS = require('aws-sdk')
 const merge = require('lodash.merge')
 const dbKey = Symbol.for('dynamo-wrap.db.key')
 
+function getCallback (args) {
+  const cb = (Function.prototype.isPrototypeOf(args.slice(-1).pop()))
+    ? args.slice(-1).pop()
+    : undefined
+  return cb
+}
+
 const clientProto = {
   get (table, key, otherParams = {}) {
-    function promise (resolve, reject) {
-      if (!table) return reject(Error('Must specify table name.'))
-      if (!key) return reject(Error('Must specify key object.'))
-      const query = Object.assign({}, otherParams, {
-        Key: key,
-        TableName: table
-      })
-      this[dbKey].get(query, (err, data) => {
-        if (err) return reject(err)
-        return resolve(data)
-      })
+    let error
+    if (!table || !key || Function.prototype.isPrototypeOf(key)) {
+      error = Error('Missing required table name or key parameters.')
     }
+    const cb = getCallback([].slice.call(arguments))
+    const query = merge({}, otherParams, {
+      Key: key,
+      TableName: table
+    })
 
-    return new Promise(promise.bind(this))
+    if (!cb && error) return Promise.reject(error)
+    if (cb && error) return cb(error)
+    const request = this[dbKey].get(query)
+    if (!cb) return request.promise().then((data) => data.Item)
+    request.send((err, data) => {
+      if (err) return cb(err)
+      cb(null, data.Item)
+    })
   },
 
   put (table, item, otherParams = {}) {
-    function promise (resolve, reject) {
-      if (!table) return reject(Error('Must specify table name.'))
-      if (!item) return reject(Error('Must supply an item'))
-      const payload = merge({}, otherParams, {
-        Item: item,
-        TableName: table
-      })
-      this[dbKey].put(payload, (err, data) => {
-        if (err) return reject(err)
-        return resolve(data)
-      })
+    let error
+    if (!table || !item || Function.prototype.isPrototypeOf(item)) {
+      error = Error('Missing required table name or item parameters.')
     }
+    const cb = getCallback([].slice.call(arguments))
+    const payload = merge({}, otherParams, {
+      Item: item,
+      TableName: table
+    })
 
-    return new Promise(promise.bind(this))
+    if (!cb && error) return Promise.reject(error)
+    if (cb && error) return cb(error)
+    const request = this[dbKey].put(payload)
+    if (!cb) return request.promise()
+    request.send(cb)
   }
 }
 

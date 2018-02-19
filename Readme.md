@@ -61,7 +61,7 @@ function accepts an options object with the following properties:
 the `AWS.DynamodDB` constructor. Default: `{}`.
 
 <a id="get"></a>
-#### `.get(table, key, otherParams)`
+#### `.get(table, key, [otherParams], [callback])`
 Retrieves an item from the database and returns a `Promise` for resolution.
 
 + `table` (string): The name of the table to query for the item.
@@ -69,9 +69,11 @@ Retrieves an item from the database and returns a `Promise` for resolution.
 + `otherParams` (object): A hash of extra parameters to supply when querying
 for the item. See the [the documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html)
 for a list of supported parameters.
++ `callback` (function): Instead of receiving results via a Promise, receive
+them via this function. Accepts parameters `error` and `item`.
 
 <a id="put"></a>
-#### `.put(table, item, otherParams)`
+#### `.put(table, item, [otherParams], [callback])`
 Inserts an item into the database and returns a `Promise` for resolution.
 
 + `table` (string): The name of the table to insert the item into.
@@ -79,6 +81,8 @@ Inserts an item into the database and returns a `Promise` for resolution.
 + `otherParams` (object): A hash of extra parameters to supply when inserting
 the item. See [the documentation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html)
 for a list of supported parameters.
++ `callback` (function): Instead of receiving results via a Promise, receive
+them via this function. Accepts parameters `error` and `data`.
 
 <a id="license"></a>
 ## License
