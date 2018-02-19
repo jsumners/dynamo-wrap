@@ -32,7 +32,7 @@ test.cb('can put items', (t) => {
 })
 
 test.cb('can put items with callback', (t) => {
-  t.plan(3)
+  t.plan(4)
 
   const year = (new Date()).getFullYear()
   const item = {
@@ -44,6 +44,7 @@ test.cb('can put items with callback', (t) => {
     t.is(err, null)
     t.deepEqual(data, {})
     client.get('Movies', item, (err, _item) => {
+      t.is(err, null)
       t.deepEqual(item, _item)
       t.end()
     })
