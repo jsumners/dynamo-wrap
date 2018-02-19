@@ -1,6 +1,7 @@
 'use strict'
 
 const AWS = require('aws-sdk')
+const merge = require('lodash.merge')
 const dbKey = Symbol.for('dynamo-wrap.db.key')
 
 const clientProto = {
@@ -25,7 +26,7 @@ const clientProto = {
     function promise (resolve, reject) {
       if (!table) return reject(Error('Must specify table name.'))
       if (!item) return reject(Error('Must supply an item'))
-      const payload = Object.assign({}, otherParams, {
+      const payload = merge({}, otherParams, {
         Item: item,
         TableName: table
       })
@@ -43,7 +44,7 @@ module.exports = function ({apiVersion = '2012-08-10', region, credentials, othe
   if (!region) throw Error('Must specify AWS region.')
   if (!credentials) throw Error('Must supply AWS credentials object.')
   const client = Object.create(clientProto)
-  const options = Object.assign({}, otherOptions, {
+  const options = merge({}, otherOptions, {
     apiVersion,
     region,
     credentials

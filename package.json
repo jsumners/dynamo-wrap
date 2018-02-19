@@ -29,7 +29,8 @@
     "test"
   ],
   "dependencies": {
-    "aws-sdk": "^2.197.0"
+    "aws-sdk": "^2.197.0",
+    "lodash.merge": "^4.6.1"
   },
   "devDependencies": {
     "ava": "^0.25.0",
