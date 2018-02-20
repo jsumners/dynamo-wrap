@@ -56,11 +56,7 @@ module.exports = function ({apiVersion = '2012-08-10', region, credentials, othe
   if (!region) throw Error('Must specify AWS region.')
   if (!credentials) throw Error('Must supply AWS credentials object.')
   const client = Object.create(clientProto)
-  const options = merge({}, otherOptions, {
-    apiVersion,
-    region,
-    credentials
-  })
+  const options = merge({apiVersion, region, credentials}, otherOptions)
   const db = new AWS.DynamoDB.DocumentClient(options)
   client[dbKey] = db
   return client
