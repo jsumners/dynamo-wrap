@@ -93,3 +93,28 @@ test.cb('rejects for missing paramters when only callback supplied', (t) => {
     t.end()
   })
 })
+
+test.cb('can put documents with extra properties', (t) => {
+  t.plan(4)
+  const item = {
+    year: 2018,
+    title: 'extra-properties',
+    foo: 'foo',
+    bar: {
+      baz: 'qux'
+    }
+  }
+  client.put('Movies', item, (err, data) => {
+    t.is(err, null)
+    t.deepEqual(data, {})
+    const key = {
+      year: 2018,
+      title: 'extra-properties'
+    }
+    client.get('Movies', key, (err, _item) => {
+      t.is(err, null)
+      t.deepEqual(_item, item)
+      t.end()
+    })
+  })
+})
